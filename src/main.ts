@@ -226,7 +226,7 @@ const _require = createRequire(import.meta.url)
  *
  * @param file File path to import.
  */
-export const dynamicImport = usingDynamicImport
+const dynamicImport = usingDynamicImport
     ? new Function('file', 'return import(file)')
     : _require
 
@@ -247,7 +247,7 @@ async function loadConfigFromBundledFile(
         const fileUrl = `${pathToFileURL(fileBase)}.mjs`
         await fsp.writeFile(fileNameTmp, bundledCode)
         try {
-            return (await import(fileUrl)).default
+            return (await dynamicImport(fileUrl)).default
         } finally {
             fs.unlink(fileNameTmp, () => { }) // Ignore errors
         }

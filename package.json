@@ -23,12 +23,15 @@
     "license": "ISC",
     "dependencies": {
         "@esbuild/win32-x64": "^0.17.16",
-        "anybuild": "0.0.1-beta.17",
-        "esbuild": "^0.17.16",
-        "fs-extra": "^11.1.1"
+        "esbuild": "^0.17.16"
     },
     "devDependencies": {
+        "@types/node": "^18.15.11",
+        "anybuild": "0.0.1-beta.18",
+        "fs-extra": "^11.1.1",
         "mock-fs": "^5.2.0",
+        "tsup": "^6.7.0",
+        "typescript": "^5.0.4",
         "vitest": "^0.30.1"
     }
 }
