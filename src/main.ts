@@ -247,7 +247,7 @@ async function loadConfigFromBundledFile(
         const fileUrl = `${pathToFileURL(fileBase)}.mjs`
         await fsp.writeFile(fileNameTmp, bundledCode)
         try {
-            return (await dynamicImport(fileUrl)).default
+            return (await import(fileUrl)).default
         } finally {
             fs.unlink(fileNameTmp, () => { }) // Ignore errors
         }

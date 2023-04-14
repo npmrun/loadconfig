@@ -22,7 +22,6 @@
     "author": "",
     "license": "ISC",
     "dependencies": {
-        "@esbuild/win32-x64": "^0.17.16",
         "esbuild": "^0.17.16"
     },
     "devDependencies": {
