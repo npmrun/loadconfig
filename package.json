@@ -1,12 +1,14 @@
 {
-    "name": "loadconfig",
+    "name": "@noderun/loadconfig",
     "type": "module",
-    "version": "1.0.0",
+    "version": "0.0.1",
     "description": "",
-    "main": "index.js",
+    "main": "dist/loadconfig.js",
+    "types": "dist/loadconfig.d.ts",
     "keywords": [],
     "files": [
-        "dist"
+        "dist",
+        "readme.md"
     ],
     "buildinfo": {
         "mode": "lib",
@@ -19,7 +21,11 @@
         "dev": "anybuild -w",
         "build": "anybuild"
     },
-    "author": "",
+    "author": {
+        "name": "noderun",
+        "email": "1549469775@qq.com"
+    },
+    "repository": "https://github.com/npmrun/loadconfig",
     "license": "ISC",
     "dependencies": {
         "esbuild": "^0.17.16"
