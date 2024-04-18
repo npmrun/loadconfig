@@ -1,5 +1,5 @@
 // https://github.com/vitejs/vite/blob/main/playground/config/__tests__/load.spec.ts
-
+import a from "./a.json"
 
 export default {
     "name": "anybuild",
@@ -10,6 +10,7 @@ export default {
     "bin": {
         "anybuild": "./dist/bin.js"
     },
+    "a": a,
     "files": [
         "dist",
         "html"

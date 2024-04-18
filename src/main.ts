@@ -3,14 +3,16 @@ import fs from 'node:fs'
 import fsp from 'node:fs/promises'
 import { pathToFileURL } from "node:url"
 import { builtinModules, createRequire } from 'node:module'
-import os from 'node:os'
+import createDebug from 'debug'
 import { build } from 'esbuild'
 import { ConfigEnv, DEFAULT_CONFIG_FILES, isBuiltin, isObject, LogLevel, lookupFile, normalizePath, UserConfig, UserConfigExport, usingDynamicImport } from "./util"
 
+const debug = createDebug("config:warn")
+const debugError = createDebug("config:error")
 
 export async function loadConfigFromFile(
     configEnv: ConfigEnv,
-    configFile?: string,
+    configFile?: string | string[],
     configRoot: string = process.cwd(),
     logLevel?: LogLevel,
 ): Promise<{
@@ -23,9 +25,18 @@ export async function loadConfigFromFile(
 
     let resolvedPath: string | undefined
 
-    if (configFile) {
+    if (configFile && !Array.isArray(configFile)) {
         // explicit config path is always resolved from cwd
         resolvedPath = path.resolve(configFile)
+    } else if (configFile && Array.isArray(configFile)) {
+        // explicit config path is always resolved from cwd
+        for (const filename of configFile) {
+            const filePath = path.resolve(configRoot, filename)
+            if (!fs.existsSync(filePath)) continue
+
+            resolvedPath = filePath
+            break
+        }
     } else {
         // implicit config file loaded from inline root (if present)
         // otherwise from cwd
@@ -39,7 +50,7 @@ export async function loadConfigFromFile(
     }
 
     if (!resolvedPath) {
-        console?.warn('no config file found.')
+        debug('no config file found.')
         return null
     }
 
@@ -64,7 +75,7 @@ export async function loadConfigFromFile(
             bundled.code,
             isESM,
         )
-        console.warn?.(`bundled config file loaded in ${getTime()}`)
+        debug(`bundled config file loaded in ${getTime()}`)
 
         const config = await (typeof userConfig === 'function'
             ? userConfig(configEnv)
@@ -78,7 +89,7 @@ export async function loadConfigFromFile(
             dependencies: bundled.dependencies,
         }
     } catch (e) {
-        console.error(`failed to load config from ${resolvedPath}`)
+        debugError(`failed to load config from ${resolvedPath}`)
         throw e
     }
 }

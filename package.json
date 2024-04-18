@@ -1,7 +1,7 @@
 {
     "name": "@noderun/loadconfig",
     "type": "module",
-    "version": "0.0.2",
+    "version": "0.0.3",
     "description": "",
     "main": "dist/loadconfig.js",
     "types": "dist/loadconfig.d.ts",
@@ -28,6 +28,7 @@
     "repository": "https://github.com/npmrun/loadconfig",
     "license": "ISC",
     "dependencies": {
+        "debug": "^4.3.4",
         "esbuild": "^0.17.16"
     },
     "devDependencies": {
